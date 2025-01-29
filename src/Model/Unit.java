@@ -40,5 +40,13 @@ public abstract class Unit {
         return sum;
     }
 
+    public void reduceAce() {
+        if (sum > 21 && aceCount > 0) {
+            sum -= 10;
+            aceCount -= 1;
+        }
+
+    }
+
 
 }
