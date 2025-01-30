@@ -32,6 +32,22 @@ public class GamePanel extends JPanel {
                 Image hiddenCardImg = new ImageIcon(getClass().getResource(showHiddenCard ?  hiddenCard.getImagePath() : "../Images/BACK.png")).getImage();
                 g.drawImage(hiddenCardImg, 20, 20, 110, 154, null);
             }
+            if(dealerHand != null) {
+                int sizeCurr = 0;
+                for (Card card : dealerHand) {
+                    Image cardImg = new ImageIcon(getClass().getResource(card.getImagePath())).getImage();
+                    g.drawImage(cardImg, 140 + (120 * sizeCurr), 20, 110, 154, null);
+                    sizeCurr++;
+                }
+            }
+            if(playerHand != null) {
+                int sizeCurr = 0;
+                for (Card card : playerHand) {
+                    Image cardImg = new ImageIcon(getClass().getResource(card.getImagePath())).getImage();
+                    g.drawImage(cardImg, 20 + (120 * sizeCurr), 200, 110, 154, null);
+                    sizeCurr++;
+                }
+            }
         } catch (Exception e){
             e.printStackTrace();
         }

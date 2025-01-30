@@ -15,7 +15,7 @@ public class Card {
     }
 
     public String getImagePath() {
-        return "../Images/" + toString() + ",png";
+        return "../Images/" + toString() + ".png";
     }
 
     public int getValue() {

@@ -63,6 +63,9 @@ public class BlackJack {
         buttonPanel.add(stayButton);
         buttonPanel.add(restart);
 
+        hitButton.addActionListener(e -> hit());
+        stayButton.addActionListener(e -> stay());
+
         frame.add(gamePanel, BorderLayout.CENTER);
         frame.add(buttonPanel, BorderLayout.SOUTH);
 
@@ -72,6 +75,36 @@ public class BlackJack {
         frame.setVisible(true);
 
         updateUI(false);
+
+    }
+
+    public void hit() {
+        player.addCard(pickUp());
+        updateUI(false);
+        player.reduceAce();
+        if(player.getSum() > 21) {
+            gameOver("You're Busted!");
+        }
+    }
+
+    public void stay() {
+        updateUI(true);
+
+        while (dealer.getSum() < 17) {
+            dealer.addCard(pickUp());
+            dealer.reduceAce();
+            updateUI(true);
+        }
+
+        if (dealer.getSum() > 21) {
+            gameOver("Dealer Busted, You Win");
+        } else if (dealer.getSum() == player.getSum()) {
+            gameOver("Tie!");
+        } else if (dealer.getSum() > player.getSum()) {
+            gameOver("You Lose!");
+        } else if (dealer.getSum() < player.getSum()) {
+            gameOver("You Win!");
+        }
 
     }
 
@@ -96,5 +129,10 @@ public class BlackJack {
     public void updateUI(boolean showHiddenCard) {
         gamePanel.updateUiData(dealer.getHand(), player.getHand(), dealer.getHiddenCard(), showHiddenCard);
 
+    }
+    public void gameOver(String message) {
+        hitButton.setEnabled(false);
+        stayButton.setEnabled(false);
+        JOptionPane.showMessageDialog(frame, message);
     }
 }
