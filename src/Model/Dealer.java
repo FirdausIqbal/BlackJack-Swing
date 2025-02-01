@@ -5,6 +5,7 @@ public class Dealer extends Unit{
 
     public Dealer(Card hiddenCard) {
         this.hiddenCard = hiddenCard;
+        setSum(hiddenCard.getValue());
     }
 
     public Card getHiddenCard() {
@@ -13,7 +14,7 @@ public class Dealer extends Unit{
 
     @Override
     public void updateData(Card card) {
-        setSum(card.getValue() + getHiddenCard().getValue());
+        setSum(card.getValue());
         setAceCount(card.isAce() ? 1 : 0);
     }
 }

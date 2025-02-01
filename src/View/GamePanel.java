@@ -44,7 +44,7 @@ public class GamePanel extends JPanel {
                 int sizeCurr = 0;
                 for (Card card : playerHand) {
                     Image cardImg = new ImageIcon(getClass().getResource(card.getImagePath())).getImage();
-                    g.drawImage(cardImg, 20 + (120 * sizeCurr), 200, 110, 154, null);
+                    g.drawImage(cardImg, 20 + (120 * sizeCurr), 220, 110, 154, null);
                     sizeCurr++;
                 }
             }

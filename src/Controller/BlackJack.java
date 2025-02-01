@@ -4,12 +4,13 @@ import Model.Card;
 import Model.Dealer;
 import Model.Player;
 import View.GamePanel;
+import View.ScorePanel;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.jar.JarEntry;
 
 public class BlackJack {
     private ArrayList<Card> deck;
@@ -18,6 +19,7 @@ public class BlackJack {
 
     private JFrame frame;
     private GamePanel gamePanel;
+    private ScorePanel scorePanel;
     private JButton hitButton, stayButton, restart;
 
     public BlackJack() {
@@ -35,25 +37,12 @@ public class BlackJack {
 
         player.addCard(pickUp());
         player.addCard(pickUp());
-
-
-        System.out.println("Dealer:");
-        System.out.println(dealer.getHand());
-        System.out.println(dealer.getHiddenCard());
-        System.out.println(dealer.getSum());
-        System.out.println(dealer.getAceCount());
-
-        System.out.println("Player :");
-        System.out.println(player.getHand());
-        System.out.println(player.getSum());
-        System.out.println(player.getAceCount());
-
-        System.out.println("Deck remaining : " + deck.size());
     }
 
     public void setupUI() {
         frame = new JFrame();
         gamePanel = new GamePanel();
+        scorePanel = new ScorePanel();
         hitButton = new JButton("Hit");
         stayButton = new JButton("Stay");
         restart = new JButton("Restart");
@@ -65,9 +54,11 @@ public class BlackJack {
 
         hitButton.addActionListener(e -> hit());
         stayButton.addActionListener(e -> stay());
+        restart.addActionListener(e -> restart());
 
         frame.add(gamePanel, BorderLayout.CENTER);
         frame.add(buttonPanel, BorderLayout.SOUTH);
+        frame.add(scorePanel, BorderLayout.NORTH);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 600);
@@ -75,7 +66,7 @@ public class BlackJack {
         frame.setVisible(true);
 
         updateUI(false);
-
+        restart.setEnabled(false);
     }
 
     public void hit() {
@@ -97,6 +88,7 @@ public class BlackJack {
         }
 
         if (dealer.getSum() > 21) {
+            System.out.println(dealer.getSum());
             gameOver("Dealer Busted, You Win");
         } else if (dealer.getSum() == player.getSum()) {
             gameOver("Tie!");
@@ -106,6 +98,13 @@ public class BlackJack {
             gameOver("You Win!");
         }
 
+    }
+    public void restart() {
+        hitButton.setEnabled(true);
+        stayButton.setEnabled(true);
+        setupGame();
+        updateUI(false);
+        restart.setEnabled(false);
     }
 
 
@@ -128,11 +127,12 @@ public class BlackJack {
     }
     public void updateUI(boolean showHiddenCard) {
         gamePanel.updateUiData(dealer.getHand(), player.getHand(), dealer.getHiddenCard(), showHiddenCard);
-
+        scorePanel.updateScore(player.getSum(), dealer.getSum(), showHiddenCard);
     }
     public void gameOver(String message) {
         hitButton.setEnabled(false);
         stayButton.setEnabled(false);
         JOptionPane.showMessageDialog(frame, message);
+        restart.setEnabled(true);
     }
 }
