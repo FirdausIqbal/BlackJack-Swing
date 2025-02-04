@@ -6,6 +6,9 @@ public class Dealer extends Unit{
     public Dealer(Card hiddenCard) {
         this.hiddenCard = hiddenCard;
         setSum(hiddenCard.getValue());
+        if(hiddenCard.isAce()) {
+            setAceCount(1);
+        }
     }
 
     public Card getHiddenCard() {

@@ -42,7 +42,7 @@ public abstract class Unit {
 
     public void reduceAce() {
         if (sum > 21 && aceCount > 0) {
-            sum -= 10;
+            sum -= (10 * aceCount);
             aceCount -= 1;
         }
 

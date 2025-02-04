@@ -34,6 +34,7 @@ public class BlackJack {
         player = new Player();
 
         dealer.addCard(pickUp());
+        dealer.reduceAce();
 
         player.addCard(pickUp());
         player.addCard(pickUp());
@@ -71,8 +72,8 @@ public class BlackJack {
 
     public void hit() {
         player.addCard(pickUp());
-        updateUI(false);
         player.reduceAce();
+        updateUI(false);
         if(player.getSum() > 21) {
             gameOver("You're Busted!");
         }
@@ -88,7 +89,6 @@ public class BlackJack {
         }
 
         if (dealer.getSum() > 21) {
-            System.out.println(dealer.getSum());
             gameOver("Dealer Busted, You Win");
         } else if (dealer.getSum() == player.getSum()) {
             gameOver("Tie!");
